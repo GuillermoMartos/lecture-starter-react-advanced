@@ -1,67 +1,37 @@
-import sharedStyles from '../styles/shared-signin-signup.module.css'
-import { ChangeEvent, FormEvent, useState } from "react"
-import { useNavigate } from "react-router-dom";
+import sharedStyles from '../styles/shared-signin-signup.module.css';
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import FORM_VALIDATORS from '../../common/validations';
+import useForm from '../hooks/hooks';
 
 type Props = {
   setIsUserLogged: (value: boolean) => void;
 }
 
 const SignIn = ({ setIsUserLogged }: Props): JSX.Element => {
-  const [signInForm, setSignInForm] = useState<{ email: string; password: string }>({ email: '', password: '' })
-  const [errors, setErrors] = useState<{ email: string | null; password: string | null }>({ email: null, password: null });
-  const navigate=useNavigate()
+  const initialFields = {
+    email: '',
+    password: '',
+  };
 
-  function validateEmail(email: string) {
-    return /\S+@\S+\.\S+/.test(email);
-  }
+  const validations = {
+    email: FORM_VALIDATORS.email,
+    password: FORM_VALIDATORS.password,
+  };
 
-  function handleValidations(name: string, value:string) {
-    if (name === 'email') {
-      if (!validateEmail(value)) {
-        setErrors({
-          ...errors,
-          email: 'Please enter a valid email address.'
-        });
-      } else {
-        setErrors({
-          ...errors,
-          email: null
-        });
-      }
-    }
+  const { formData, errors, handleChange } =
+    useForm(initialFields, validations);
+  const navigate=useNavigate();
 
-    if (name === 'password') {
-      if (value.length < 3 || value.length > 20) {
-        setErrors({
-          ...errors,
-          password: 'Password must be between 3 and 20 characters long.'
-        });
-      } else {
-        setErrors({
-          ...errors,
-          password: null
-        });
-      }
-    }
-  }
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setSignInForm({
-      ...signInForm,
-      [name]: value
-    });
-    handleValidations(name, value)
-  }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+    e.preventDefault();
     if (errors.email || errors.password) {
-        return
+      return;
     }
     
-    setIsUserLogged(true)
-    navigate('/')
+    setIsUserLogged(true);
+    navigate('/');
   }
 
   return (
@@ -71,7 +41,7 @@ const SignIn = ({ setIsUserLogged }: Props): JSX.Element => {
         <form className={sharedStyles['sign-in-form']} autoComplete="off" onSubmit={handleSubmit}>  
           <label className="input">
             <span className="input__heading">Email</span>
-            <input data-test-id="auth-email" name="email" type="email" value={signInForm.email} onChange={handleChange} required />
+            <input data-test-id="auth-email" name="email" type="email" value={formData.email} onChange={handleChange} required />
             {errors.email && <span className="error">{errors.email}</span>}
           </label>
           <label className="input">
@@ -80,7 +50,7 @@ const SignIn = ({ setIsUserLogged }: Props): JSX.Element => {
               data-test-id="auth-password"
               name="password"
               type="password"
-              value={signInForm.password}
+              value={formData.password}
               onChange={handleChange}
               autoComplete="new-password"
               required
@@ -95,7 +65,7 @@ const SignIn = ({ setIsUserLogged }: Props): JSX.Element => {
           Don't have an account?
           <a
             data-test-id="auth-sign-up-link"
-            onClick={()=>{navigate('/sign-up')}}
+            onClick={()=>{navigate('/sign-up');}}
             className={`${sharedStyles['sign-in-form__link']} clickeable-pointer`}
           >
             Sign Up
@@ -103,7 +73,7 @@ const SignIn = ({ setIsUserLogged }: Props): JSX.Element => {
         </span>
       </main>
     </>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;

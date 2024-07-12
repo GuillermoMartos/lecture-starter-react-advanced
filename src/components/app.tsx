@@ -1,30 +1,30 @@
-import { Navigate, RouteObject } from "react-router-dom"
-import RouterProvider from "../common/router-provider"
-import Footer from "./footer/footer"
-import Header from "./header/header"
-import SignUp from "./sign-up/sign-up"
-import SignIn from "./sign-in/sign-in"
-import Trip from "./trip/trip"
-import Main from "./main/main"
-import Bookings from "./bookings/bookings"
-import { useState } from "react"
-import { Outlet } from "react-router-dom";
+import { Navigate, RouteObject } from 'react-router-dom';
+import RouterProvider from '../common/router-provider';
+import Footer from './footer/footer';
+import Header from './header/header';
+import SignUp from './sign-up/sign-up';
+import SignIn from './sign-in/sign-in';
+import Trip from './trip/trip';
+import Main from './main/main';
+import Bookings from './bookings/bookings';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 
 
 const App = (): JSX.Element => {
-  const [isUserLogged, setIsUserLogged] = useState(false)
+  const [isUserLogged, setIsUserLogged] = useState(false);
 
   /* we use Layout to have header and footer in each page, and being inside Router Provider 
   allow us to have Link/Navigate available. And Outlet will be the space to render children 
   (the rest of the components) */
   function Layout() {
     return (
-        <>
-          <Header isUserLogged={isUserLogged} setIsUserLogged={setIsUserLogged} />
-          <Outlet />
-          <Footer />
-        </>
+      <>
+        <Header isUserLogged={isUserLogged} setIsUserLogged={setIsUserLogged} />
+        <Outlet />
+        <Footer />
+      </>
     );
   }
     
@@ -34,7 +34,7 @@ const App = (): JSX.Element => {
       element: <Layout />, children: [
         {
           path: '/sign-up',
-          element: (<SignUp />)
+          element: (<SignUp setIsUserLogged={setIsUserLogged}/>)
         },
         {
           path: '/sign-in',
@@ -56,15 +56,15 @@ const App = (): JSX.Element => {
           path: '*',
           element:(<Navigate to={'/'} />)
         }
-  ]}
+      ]}
     
-]
+  ];
     
     
-    return <> 
+  return <> 
 
     <RouterProvider routes={routes} />
-    </>
-}
+  </>;
+};
 
-export default App
+export default App;
