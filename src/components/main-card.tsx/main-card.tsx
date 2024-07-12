@@ -1,9 +1,8 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { MainCardProps } from '../../common/types';
 
 const MainCard = ({ price, title, days, difficulty, photoSrc, id }: MainCardProps)
   : JSX.Element => {
-  const navigate= useNavigate();
   
   return (
     <>
@@ -40,10 +39,12 @@ const MainCard = ({ price, title, days, difficulty, photoSrc, id }: MainCardProp
             </strong>
           </div>
         </div>
-        <a data-test-id="trip-card-link clickeable-pointer" onClick={()=>navigate(`/trip/${id}`)} className="button">
+        <Link data-test-id="trip-card-link clickeable-pointer" to={`/trip/${id}`} className="button">
               Discover a trip
-        </a>
+        </Link>
       </li>
+
+      
     </>
   );
 };

@@ -29,4 +29,13 @@ export enum FILTER_OPTIONS{
         DURATION='DURATION',
         DIFFICULTY='DIFFICULTY',
         SEARCH='SEARCH'
-      }
+}
+      
+export type MyBooking = {
+  title:string,
+  date:string,
+  price: number,
+  level:string,
+  guests: number,
+  id: string
+}

@@ -10,7 +10,8 @@ import Bookings from './bookings/bookings';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import trips from '../assets/data/trips.json';
-import { FILTER_OPTIONS, FiltersAppliedState, TripOption } from '../common/types';
+import { FILTER_OPTIONS, FiltersAppliedState, MyBooking, TripOption } from '../common/types';
+import ProtectedRoute from '../common/protected-route';
 
 const App = (): JSX.Element => {
   const [isUserLogged, setIsUserLogged] = useState(false);
@@ -23,6 +24,7 @@ const App = (): JSX.Element => {
           [FILTER_OPTIONS.DURATION]: [],
           [FILTER_OPTIONS.SEARCH]: []
         });
+  const [myBookings, setMyBookings]=useState<MyBooking[]>([]);
   
   
   /* we use Layout to have header and footer in each page, and being inside Router Provider 
@@ -52,20 +54,31 @@ const App = (): JSX.Element => {
         },
         {
           path: '/trip/:tripId',
-          element:(<Trip/>)
+          element: (
+            <ProtectedRoute isUserLogged={isUserLogged}>
+              <Trip setMyBookings={setMyBookings} />
+            </ProtectedRoute>
+          )
         },
         {
           path: '/',
-          element: (<Main isUserLogged={isUserLogged}
-            allTrips={allTripsOptions}
-            selectedTrips={filteredTripsOptions}
-            setSelectedTripsOptions={setFilteredTripsOptions}
-            filtersApplied={filtersApplied}
-            setFiltersApplied={setFiltersApplied}/>)
+          element: (
+            <ProtectedRoute isUserLogged={isUserLogged}>
+              <Main
+                allTrips={allTripsOptions}
+                selectedTrips={filteredTripsOptions}
+                setSelectedTripsOptions={setFilteredTripsOptions}
+                filtersApplied={filtersApplied}
+                setFiltersApplied={setFiltersApplied} />
+            </ProtectedRoute>)
         },
         {
           path: '/bookings',
-          element:(<Bookings/>)
+          element: (
+            <ProtectedRoute isUserLogged={isUserLogged}>
+              <Bookings myBookings={myBookings} setMyBookings={setMyBookings} />
+            </ProtectedRoute>
+          )
         },
         {
           path: '*',

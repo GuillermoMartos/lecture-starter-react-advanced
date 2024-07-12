@@ -1,14 +1,20 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { filterTripById } from '../../common/helpers';
+import TripDetail from '../trip-detail/trip-detail';
+import { MyBooking } from '../../common/types';
 
-const Trip = (): JSX.Element => {
+
+type Props = {
+  setMyBookings:React.Dispatch<React.SetStateAction<MyBooking[]>>
+}
+
+const Trip = ({setMyBookings }:Props): JSX.Element => {
   const { tripId } = useParams<{ tripId: string }>();
   const navigate=useNavigate();
   if (!tripId) {
     navigate('/');
   }
   const tripData = filterTripById(tripId as string);
-  console.log(tripData);
 
   return (
     <>
@@ -57,12 +63,18 @@ const Trip = (): JSX.Element => {
             <button
               data-test-id="trip-details-button"
               className="trip__button button"
+              onClick={() => {
+                document.getElementById('hideable-modal')?.removeAttribute('hidden');
+              }}
             >
             Book a trip
             </button>
           </div>
         </div>
       </main>
+      <TripDetail title={tripData.title} price={tripData.price}
+        level={tripData.level} duration={tripData.duration}
+        setMyBookings={setMyBookings} />
     </>
   );
 };

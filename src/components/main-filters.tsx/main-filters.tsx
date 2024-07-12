@@ -15,8 +15,6 @@ const MainFilters = ({ allTrips, setSelectedTrips,
   filtersApplied, setFiltersApplied }: Props)
   : JSX.Element => {
   
-  console.log(filtersApplied, 'se ve que render ');
-  
   function handleDurationFilter(e:ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
     let filteredTrips: TripOption[] = [];

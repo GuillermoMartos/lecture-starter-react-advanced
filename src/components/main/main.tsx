@@ -1,12 +1,9 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import MainCard from '../main-card.tsx/main-card';
 import { FiltersAppliedState, TripOption } from '../../common/types';
 import MainFilters from '../main-filters.tsx/main-filters';
 
 
 type Props = {
-  isUserLogged: boolean
   allTrips: TripOption[],
   selectedTrips: TripOption[],
   setSelectedTripsOptions: React.Dispatch<React.SetStateAction<TripOption[]>>;
@@ -14,15 +11,10 @@ type Props = {
   setFiltersApplied: React.Dispatch<React.SetStateAction<FiltersAppliedState>>
 }
 
-const Main = ({ isUserLogged, allTrips, selectedTrips,
+const Main = ({ allTrips, selectedTrips,
   setSelectedTripsOptions, filtersApplied, setFiltersApplied }: Props)
   : JSX.Element => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!isUserLogged) {
-      navigate('/sign-in');
-    }
-  }, [isUserLogged, navigate, selectedTrips]);
+
 
   return (
     <>
