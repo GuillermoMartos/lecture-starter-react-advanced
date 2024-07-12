@@ -1,17 +1,24 @@
-import { ChangeEvent } from 'react';
-import { TripOption } from '../../common/types';
+import { ChangeEvent, FormEvent } from 'react';
+import { FiltersAppliedState, TripOption, FILTER_OPTIONS } from '../../common/types';
+
+
 
 type Props = {
   allTrips: TripOption[],
-  selectedTrips: TripOption[],
-    setSelectedTrips: React.Dispatch<React.SetStateAction<TripOption[]>>
+  setSelectedTrips: React.Dispatch<React.SetStateAction<TripOption[]>>,
+  filtersApplied: FiltersAppliedState,
+  setFiltersApplied: React.Dispatch<React.SetStateAction<FiltersAppliedState>>
 }
 
-const MainFilters = ({ allTrips, setSelectedTrips }: Props)
+
+const MainFilters = ({ allTrips, setSelectedTrips,
+  filtersApplied, setFiltersApplied }: Props)
   : JSX.Element => {
-    
+  
+  console.log(filtersApplied, 'se ve que render ');
+  
   function handleDurationFilter(e:ChangeEvent<HTMLSelectElement>) {
-    const value = e.target.value.toString();
+    const value = e.target.value;
     let filteredTrips: TripOption[] = [];
     switch (value) {
     case '10':
@@ -25,18 +32,73 @@ const MainFilters = ({ allTrips, setSelectedTrips }: Props)
       break;
     case 'quit_filter':
       filteredTrips = allTrips.slice();
-      break;
+      setFiltersApplied(prev => {
+        return {...prev, [FILTER_OPTIONS.DURATION]:[]};
+      });
+      setSelectedTrips(filteredTrips);
+      return;
     default:
       alert('range duration value not found');
     }
     
     setSelectedTrips(filteredTrips);
+    setFiltersApplied(prev => {
+      return {...prev, [FILTER_OPTIONS.DURATION]:filteredTrips};
+    });
+  }
+
+  function handleDifficultyFilter(e:ChangeEvent<HTMLSelectElement>) {
+    const value = e.target.value;
+    let filteredTrips: TripOption[] = [];
+    switch (value) {
+    case 'easy':
+      filteredTrips = allTrips.filter(el => el.level === 'easy');
+      break;
+    case 'moderate':
+      filteredTrips = allTrips.filter(el => el.level === 'moderate');
+      break;
+    case 'difficult':
+      filteredTrips = allTrips.filter(el => el.level === 'difficult');
+      break;
+    case 'quit_filter':
+      filteredTrips = allTrips.slice();
+      setFiltersApplied(prev => {
+        return {...prev, [FILTER_OPTIONS.DIFFICULTY]:[]};
+      });
+      setSelectedTrips(filteredTrips);
+      return;
+    default:
+      alert('range duration value not found');
+    }
+    
+    setSelectedTrips(filteredTrips);
+    setFiltersApplied(prev => {
+      return {...prev, [FILTER_OPTIONS.DIFFICULTY]:filteredTrips};
+    });
+  }
+
+  function search(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const value = (e.currentTarget.elements.namedItem('search')as HTMLInputElement).value;
+    const filteredTrips = allTrips.filter(el =>
+      el.title.toLowerCase() === value.toLowerCase());
+    setFiltersApplied(prev => {
+      return {...prev, [FILTER_OPTIONS.SEARCH]:filteredTrips};
+    });
+    setSelectedTrips(filteredTrips);
+  }
+
+  function clearSearchFilter() {
+    setFiltersApplied(prev => {
+      return {...prev, [FILTER_OPTIONS.SEARCH]:[]};
+    });
+    setSelectedTrips(allTrips);
   }
     
   return (
     <section className="trips-filter">
       <h2 className="visually-hidden">Trips filter</h2>
-      <form className="trips-filter__form" autoComplete="off">
+      <form className="trips-filter__form" autoComplete="off" onSubmit={(e)=> search(e)}>
         <label className="trips-filter__search input">
           <span className="visually-hidden">Search by name</span>
           <input
@@ -45,6 +107,7 @@ const MainFilters = ({ allTrips, setSelectedTrips }: Props)
             type="search"
             placeholder="search by title"
           />
+          <button type="button" className="clear-button clickeable-pointer" onClick={() => clearSearchFilter()}>×</button>
         </label>
         <label className="select">
           <span className="visually-hidden">Search by duration</span>
@@ -58,8 +121,9 @@ const MainFilters = ({ allTrips, setSelectedTrips }: Props)
         </label>
         <label className="select">
           <span className="visually-hidden">Search by level</span>
-          <select data-test-id="filter-level" name="level">
+          <select data-test-id="filter-level" name="level" onChange={(e)=>handleDifficultyFilter(e)}>
             <option value="">level</option>
+            <option value="quit_filter">Quit filter</option>
             <option value="easy">easy</option>
             <option value="moderate">moderate</option>
             <option value="difficult">difficult</option>

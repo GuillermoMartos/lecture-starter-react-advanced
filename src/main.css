@@ -278,6 +278,8 @@ select {
 .trips-filter__search {
     width: 100%;
     max-width: 350px;
+    display: flex;
+    flex-direction: row;
 }
 
 .trips-filter__search input {

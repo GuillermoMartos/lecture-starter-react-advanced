@@ -3,7 +3,8 @@ export type MainCardProps = {
     title: string,
     days: number,
     difficulty: string,
-    photoSrc: string
+    photoSrc: string,
+    id:string
 }
 
 export type TripOption = {
@@ -17,3 +18,15 @@ export type TripOption = {
     createdAt: string;
     }
   
+
+export type FiltersAppliedState = {
+        SEARCH: TripOption[];
+        DURATION: TripOption[];
+        DIFFICULTY: TripOption[];
+      };
+      
+export enum FILTER_OPTIONS{
+        DURATION='DURATION',
+        DIFFICULTY='DIFFICULTY',
+        SEARCH='SEARCH'
+      }

@@ -10,16 +10,21 @@ import Bookings from './bookings/bookings';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import trips from '../assets/data/trips.json';
-import { TripOption } from '../common/types';
-
-
+import { FILTER_OPTIONS, FiltersAppliedState, TripOption } from '../common/types';
 
 const App = (): JSX.Element => {
   const [isUserLogged, setIsUserLogged] = useState(false);
   const [allTripsOptions] = useState<TripOption[]>(trips);
   const [filteredTripsOptions, setFilteredTripsOptions] =
     useState<TripOption[]>(allTripsOptions);
-
+  const [filtersApplied, setFiltersApplied] =
+        useState<FiltersAppliedState>({
+          [FILTER_OPTIONS.DIFFICULTY]: [],
+          [FILTER_OPTIONS.DURATION]: [],
+          [FILTER_OPTIONS.SEARCH]: []
+        });
+  
+  
   /* we use Layout to have header and footer in each page, and being inside Router Provider 
   allow us to have Link/Navigate available. And Outlet will be the space to render children 
   (the rest of the components) */
@@ -54,7 +59,9 @@ const App = (): JSX.Element => {
           element: (<Main isUserLogged={isUserLogged}
             allTrips={allTripsOptions}
             selectedTrips={filteredTripsOptions}
-            setSelectedTripsOptions={setFilteredTripsOptions} />)
+            setSelectedTripsOptions={setFilteredTripsOptions}
+            filtersApplied={filtersApplied}
+            setFiltersApplied={setFiltersApplied}/>)
         },
         {
           path: '/bookings',

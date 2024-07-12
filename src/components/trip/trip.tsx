@@ -1,7 +1,14 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { filterTripById } from '../../common/helpers';
 
 const Trip = (): JSX.Element => {
-  const {tripId}= useParams<{ tripId: string }>();
+  const { tripId } = useParams<{ tripId: string }>();
+  const navigate=useNavigate();
+  if (!tripId) {
+    navigate('/');
+  }
+  const tripData = filterTripById(tripId as string);
+  console.log(tripData);
 
   return (
     <>
@@ -10,7 +17,7 @@ const Trip = (): JSX.Element => {
         <div className="trip">
           <img
             data-test-id="trip-details-image"
-            src="./assets/images/iceland.jpg"
+            src={tripData.image}
             className="trip__img"
             alt="trip photo"
           />
@@ -18,17 +25,17 @@ const Trip = (): JSX.Element => {
             <div className="trip-info">
               <h3 data-test-id="trip-details-title"
                 className="trip-info__title">
-              Iceland
+                {tripData.title}
               </h3>
               <div className="trip-info__content">
                 <span
                   data-test-id="trip-details-duration"
                   className="trip-info__duration"
                 >
-                  <strong>15</strong> days
+                  <strong>{ tripData.duration}</strong> days
                 </span>
                 <span data-test-id="trip-details-level" className="trip-info__level">
-                easy
+                  {tripData.level}
                 </span>
               </div>
             </div>
@@ -36,13 +43,7 @@ const Trip = (): JSX.Element => {
               data-test-id="trip-details-description"
               className="trip__description"
             >
-            An island is a body of land surrounded by water. Continents are also
-            surrounded by water, but because they are so big, they are not
-            considered islands. Australia, the smallest continent, is more than
-            three times the size of Greenland, the largest island. There are
-            countless islands in the ocean, lakes, and rivers around the world.
-            They vary greatly in size, climate, and the kinds of organisms that
-              inhabit them. Id trip: { tripId}
+              {tripData.description}
             </div>
             <div className="trip-price">
               <span>Price</span>
@@ -50,7 +51,7 @@ const Trip = (): JSX.Element => {
                 data-test-id="trip-details-price-value"
                 className="trip-price__value"
               >
-              $7000
+              ${tripData.price}
               </strong>
             </div>
             <button
