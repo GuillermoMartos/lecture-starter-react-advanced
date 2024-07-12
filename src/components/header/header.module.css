@@ -65,6 +65,8 @@
 .profile-nav:focus .profile-nav__list,
 .profile-nav__list:focus-within .profile-nav__list {
     display: block;
+    align-items: center;
+    text-align: center;
 }
 
 .profile-nav__list {
@@ -74,7 +76,8 @@
     z-index: 5;
     display: none;
     min-width: 150px;
-    padding: 0;
+    padding: 3px;
+    padding-top: 12px;
     list-style: none;
     background-color: var(--color-white);
     border-radius: 1px;
@@ -84,6 +87,7 @@
 .profile-nav__item {
     padding: 0 10px 10px;
     text-align: center;
+    width: 100%;
 }
 
 .profile-nav__item:first-child {
@@ -92,4 +96,6 @@
 
 .profile-nav__sign-out {
     min-height: auto;
+    background-color: var(--color-blue-200);
+    border-style: none;
 }

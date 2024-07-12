@@ -48,14 +48,13 @@ const Header = ({ isUserLogged, setIsUserLogged }: Props): JSX.Element => {
                 >
                   <li
                     data-test-id="header-profile-nav-username"
-                    className={styles['nav-header__item']}
                   >
                     John Doe
                   </li>
-                  <li className={styles['nav-header__item']}>
+                  <li>
                     <button
                       data-test-id="header-profile-nav-sign-out"
-                            className={`${styles['profile-nav__sign-out']} clickeable-pointer`}
+                            className={`${styles['profile-nav__sign-out']} button clickeable-pointer`}
                             onClick={()=>setIsUserLogged(false)}
                     >
                       Sign Out
