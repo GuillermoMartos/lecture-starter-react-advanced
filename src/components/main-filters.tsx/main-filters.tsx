@@ -81,7 +81,7 @@ const MainFilters = ({ allTrips, setSelectedTrips,
     e.preventDefault();
     const value = (e.currentTarget.elements.namedItem('search')as HTMLInputElement).value;
     const filteredTrips = allTrips.filter(el =>
-      el.title.toLowerCase() === value.toLowerCase());
+      el.title.toLowerCase().startsWith(value.toLowerCase()));
     setFiltersApplied(prev => {
       return {...prev, [FILTER_OPTIONS.SEARCH]:filteredTrips};
     });
