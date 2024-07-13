@@ -20,9 +20,9 @@ export type TripOption = {
   
 
 export type FiltersAppliedState = {
-        SEARCH: TripOption[];
-        DURATION: TripOption[];
-        DIFFICULTY: TripOption[];
+        SEARCH: string|null;
+        DURATION: string|null;
+        DIFFICULTY: string|null;
       };
       
 export enum FILTER_OPTIONS{

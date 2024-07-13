@@ -10,86 +10,104 @@ type Props = {
 }
 
 
-const MainFilters = ({ allTrips, setSelectedTrips,
-  filtersApplied, setFiltersApplied }: Props)
+
+const MainFilters = (
+  { allTrips, setSelectedTrips,setFiltersApplied, filtersApplied }: Props)
   : JSX.Element => {
-  filtersApplied;
-  function handleDurationFilter(e:ChangeEvent<HTMLSelectElement>) {
-    const value = e.target.value;
-    let filteredTrips: TripOption[] = [];
-    switch (value) {
-    case '10':
-      filteredTrips = allTrips.filter(el => el.duration >= 11);
-      break;
-    case '5_x_10':
-      filteredTrips = allTrips.filter(el => el.duration >= 6 && el.duration <= 10);
-      break;
-    case '0_x_5':
-      filteredTrips = allTrips.filter(el => el.duration >= 1 && el.duration <= 5);
-      break;
-    case 'quit_filter':
-      filteredTrips = allTrips.slice();
-      setFiltersApplied(prev => {
-        return {...prev, [FILTER_OPTIONS.DURATION]:[]};
-      });
-      setSelectedTrips(filteredTrips);
-      return;
-    default:
-      alert('range duration value not found');
-    }
+
+  const applyFilters = (filters:FiltersAppliedState) => {
+    let filteredTrips = allTrips.slice();
     
+    if (filters[FILTER_OPTIONS.DURATION]) { 
+      switch (filters[FILTER_OPTIONS.DURATION]) {
+      case '10':
+        filteredTrips = filteredTrips.filter(el => el.duration >= 11);
+        break;
+      case '5_x_10':
+        filteredTrips = filteredTrips.filter(el => el.duration >= 6 && el.duration <= 10);
+        break;
+      case '0_x_5':
+        filteredTrips = filteredTrips.filter(el => el.duration >= 1 && el.duration <= 5);
+        break;
+      case 'quit_filter':
+        filteredTrips = filteredTrips.slice();
+        setFiltersApplied(prev => {
+          return { ...prev, [FILTER_OPTIONS.DURATION]: null };
+        });
+        break;
+      default:
+        alert('range duration value not found');
+      }
+    }
+
+    if (filters[FILTER_OPTIONS.DIFFICULTY]) {
+      console.log('asdi venimos antes de dificultad', filteredTrips);
+      switch (filters[FILTER_OPTIONS.DIFFICULTY]) {
+      case 'easy':
+        filteredTrips = filteredTrips.filter(el => el.level === 'easy');
+        break;
+      case 'moderate':
+        filteredTrips = filteredTrips.filter(el => el.level === 'moderate');
+        break;
+      case 'difficult':
+        filteredTrips = filteredTrips.filter(el => el.level === 'difficult');
+        break;
+      case 'quit_filter':
+        filteredTrips = filteredTrips.slice();
+        setFiltersApplied(prev => {
+          return {...prev, [FILTER_OPTIONS.DIFFICULTY]:null};
+        });
+        break;
+      default:
+        alert('range duration value not found');
+      }
+    }
+
+    if (filters[FILTER_OPTIONS.SEARCH]) {
+      filteredTrips = filteredTrips.filter(el =>
+        el.title.toLowerCase()
+          .startsWith((filters[FILTER_OPTIONS.SEARCH] as string)
+            .toLowerCase()));
+    }
+
     setSelectedTrips(filteredTrips);
+  };
+
+  
+  function handleDurationFilter(e: ChangeEvent<HTMLSelectElement>) {
+    const value = e.target.value;
     setFiltersApplied(prev => {
-      return {...prev, [FILTER_OPTIONS.DURATION]:filteredTrips};
+      const newFilters = { ...prev, [FILTER_OPTIONS.DURATION]: value };
+      applyFilters(newFilters);
+      return newFilters;
     });
   }
 
   function handleDifficultyFilter(e:ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
-    let filteredTrips: TripOption[] = [];
-    switch (value) {
-    case 'easy':
-      filteredTrips = allTrips.filter(el => el.level === 'easy');
-      break;
-    case 'moderate':
-      filteredTrips = allTrips.filter(el => el.level === 'moderate');
-      break;
-    case 'difficult':
-      filteredTrips = allTrips.filter(el => el.level === 'difficult');
-      break;
-    case 'quit_filter':
-      filteredTrips = allTrips.slice();
-      setFiltersApplied(prev => {
-        return {...prev, [FILTER_OPTIONS.DIFFICULTY]:[]};
-      });
-      setSelectedTrips(filteredTrips);
-      return;
-    default:
-      alert('range duration value not found');
-    }
-    
-    setSelectedTrips(filteredTrips);
     setFiltersApplied(prev => {
-      return {...prev, [FILTER_OPTIONS.DIFFICULTY]:filteredTrips};
+      const newFilters = { ...prev, [FILTER_OPTIONS.DIFFICULTY]: value };
+      applyFilters(newFilters);
+      return newFilters;
     });
   }
 
   function search(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const value = (e.currentTarget.elements.namedItem('search')as HTMLInputElement).value;
-    const filteredTrips = allTrips.filter(el =>
-      el.title.toLowerCase().startsWith(value.toLowerCase()));
     setFiltersApplied(prev => {
-      return {...prev, [FILTER_OPTIONS.SEARCH]:filteredTrips};
+      const newFilters = { ...prev, [FILTER_OPTIONS.SEARCH]: value };
+      applyFilters(newFilters);
+      return newFilters;
     });
-    setSelectedTrips(filteredTrips);
   }
 
   function clearSearchFilter() {
     setFiltersApplied(prev => {
-      return {...prev, [FILTER_OPTIONS.SEARCH]:[]};
+      const newFilters = { ...prev, [FILTER_OPTIONS.SEARCH]: null };
+      applyFilters(newFilters);
+      return newFilters;
     });
-    setSelectedTrips(allTrips);
   }
     
   return (
@@ -102,7 +120,7 @@ const MainFilters = ({ allTrips, setSelectedTrips,
             data-test-id="filter-search"
             name="search"
             type="search"
-            placeholder="search by title"
+            placeholder={filtersApplied[FILTER_OPTIONS.SEARCH] ?? 'Search by title...'}
           />
           <button type="button" className="clear-button clickeable-pointer" onClick={() => clearSearchFilter()}>×</button>
         </label>

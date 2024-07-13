@@ -20,9 +20,9 @@ const App = (): JSX.Element => {
     useState<TripOption[]>(allTripsOptions);
   const [filtersApplied, setFiltersApplied] =
         useState<FiltersAppliedState>({
-          [FILTER_OPTIONS.DIFFICULTY]: [],
-          [FILTER_OPTIONS.DURATION]: [],
-          [FILTER_OPTIONS.SEARCH]: []
+          [FILTER_OPTIONS.DIFFICULTY]: null,
+          [FILTER_OPTIONS.DURATION]: null,
+          [FILTER_OPTIONS.SEARCH]: null
         });
   const [myBookings, setMyBookings]=useState<MyBooking[]>([]);
   
