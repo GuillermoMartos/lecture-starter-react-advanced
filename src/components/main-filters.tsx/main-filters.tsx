@@ -41,7 +41,6 @@ const MainFilters = (
     }
 
     if (filters[FILTER_OPTIONS.DIFFICULTY]) {
-      console.log('asdi venimos antes de dificultad', filteredTrips);
       switch (filters[FILTER_OPTIONS.DIFFICULTY]) {
       case 'easy':
         filteredTrips = filteredTrips.filter(el => el.level === 'easy');
