@@ -10,8 +10,8 @@ const useForm = (initialFields: FormFields, validations: Record<string, (value: 
     =>
     string | null>)=>
 {
-  const [formData, setFormData] = useState(initialFields);
-  const [errors, setErrors] =
+  const [ formData, setFormData ] = useState(initialFields);
+  const [ errors, setErrors ] =
       useState<Record<string, string | null>>(Object.keys(initialFields)
         .reduce((acc, key) =>
         {

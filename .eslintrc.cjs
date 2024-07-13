@@ -22,6 +22,8 @@ module.exports = {
       ignoreStrings: true,
       ignoreTemplateLiterals: true,
     }],
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "always"],
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
   },

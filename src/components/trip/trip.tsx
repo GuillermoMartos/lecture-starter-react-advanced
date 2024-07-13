@@ -11,7 +11,7 @@ type Props = {
   setMyBookings:React.Dispatch<React.SetStateAction<MyBooking[]>>
 }
 
-const Trip = ({setMyBookings }:Props): JSX.Element => {
+const Trip = ({ setMyBookings }:Props): JSX.Element => {
   const { tripId } = useParams<{ tripId: string }>();
   const navigate=useNavigate();
   if (!tripId) {

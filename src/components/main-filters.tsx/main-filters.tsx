@@ -9,8 +9,6 @@ type Props = {
   setFiltersApplied: React.Dispatch<React.SetStateAction<FiltersAppliedState>>
 }
 
-
-
 const MainFilters = (
   { allTrips, setSelectedTrips,setFiltersApplied, filtersApplied }: Props)
   : JSX.Element => {
@@ -36,7 +34,7 @@ const MainFilters = (
         });
         break;
       default:
-        alert('range duration value not found');
+        alert('selected range duration value not found');
       }
     }
 
@@ -54,11 +52,11 @@ const MainFilters = (
       case 'quit_filter':
         filteredTrips = filteredTrips.slice();
         setFiltersApplied(prev => {
-          return {...prev, [FILTER_OPTIONS.DIFFICULTY]:null};
+          return { ...prev, [FILTER_OPTIONS.DIFFICULTY]:null };
         });
         break;
       default:
-        alert('range duration value not found');
+        alert('selected range difficulty value not found');
       }
     }
 
@@ -73,19 +71,15 @@ const MainFilters = (
   };
 
   
-  function handleDurationFilter(e: ChangeEvent<HTMLSelectElement>) {
+  function handleFilters(e: ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
-    setFiltersApplied(prev => {
-      const newFilters = { ...prev, [FILTER_OPTIONS.DURATION]: value };
-      applyFilters(newFilters);
-      return newFilters;
-    });
-  }
+    const name = e.target.name;
 
-  function handleDifficultyFilter(e:ChangeEvent<HTMLSelectElement>) {
-    const value = e.target.value;
     setFiltersApplied(prev => {
-      const newFilters = { ...prev, [FILTER_OPTIONS.DIFFICULTY]: value };
+      const newFilters = {
+        ...prev, [
+        FILTER_OPTIONS[(name.toUpperCase()) as FILTER_OPTIONS]]: value
+      };
       applyFilters(newFilters);
       return newFilters;
     });
@@ -93,7 +87,8 @@ const MainFilters = (
 
   function search(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const value = (e.currentTarget.elements.namedItem('search')as HTMLInputElement).value;
+    const value = (e.currentTarget.elements.namedItem(
+      ([ FILTER_OPTIONS.SEARCH ]) as unknown as string) as HTMLInputElement).value;
     setFiltersApplied(prev => {
       const newFilters = { ...prev, [FILTER_OPTIONS.SEARCH]: value };
       applyFilters(newFilters);
@@ -117,17 +112,20 @@ const MainFilters = (
           <span className="visually-hidden">Search by name</span>
           <input
             data-test-id="filter-search"
-            name="search"
+            name= { FILTER_OPTIONS.SEARCH }
             type="search"
-            placeholder={filtersApplied[FILTER_OPTIONS.SEARCH] ?? 'Search by title...'}
+            placeholder={filtersApplied[FILTER_OPTIONS.SEARCH] ?? 'Search...'}
           />
           <button type="button" className="clear-button clickeable-pointer" onClick={() => clearSearchFilter()}>×</button>
         </label>
         <label className="select">
           <span className="visually-hidden">Search by duration</span>
-          <select data-test-id="filter-duration" name="duration" onChange={(e)=>handleDurationFilter(e)}>
-            <option>duration</option>
-            <option value="quit_filter">Quit filter</option>
+          <select defaultValue={filtersApplied[FILTER_OPTIONS.DURATION] ?? 'duration'}
+            data-test-id="filter-duration"
+            name={FILTER_OPTIONS.DURATION}
+            onChange={(e) => handleFilters(e)}>
+            <option disabled selected>duration</option>
+            <option value="quit_filter">No filter</option>
             <option value="0_x_5">&lt; 5 days</option>
             <option value="5_x_10">&lt; 10 days</option>
             <option value="10">&ge; 10 days</option>
@@ -135,9 +133,12 @@ const MainFilters = (
         </label>
         <label className="select">
           <span className="visually-hidden">Search by level</span>
-          <select data-test-id="filter-level" name="level" onChange={(e)=>handleDifficultyFilter(e)}>
-            <option value="">level</option>
-            <option value="quit_filter">Quit filter</option>
+          <select defaultValue={filtersApplied[FILTER_OPTIONS.DIFFICULTY] ?? 'level'}
+            data-test-id="filter-level"
+            name={FILTER_OPTIONS.DIFFICULTY}
+            onChange={(e) => handleFilters(e)}>
+            <option disabled selected>level</option>
+            <option value="quit_filter">No filter</option>
             <option value="easy">easy</option>
             <option value="moderate">moderate</option>
             <option value="difficult">difficult</option>

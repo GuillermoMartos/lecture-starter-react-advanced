@@ -6,7 +6,7 @@ type Props = {
     setMyBookings:React.Dispatch<React.SetStateAction<MyBooking[]>>
   }
 
-const BookingCard = ({myBooking,
+const BookingCard = ({ myBooking,
   setMyBookings }: Props): JSX.Element => {
     
   function handleCancelBooking() {

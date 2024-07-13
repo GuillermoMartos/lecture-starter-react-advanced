@@ -12,8 +12,8 @@ type Props = {
 
 const TripDetail = ({ title, level,
   duration, price, setMyBookings }: Props): JSX.Element => {
-  const [guestsNumber, setGuestsNumber] = useState<number>(1);
-  const [minDate, setMinDate] = useState('');
+  const [ guestsNumber, setGuestsNumber ] = useState<number>(1);
+  const [ minDate, setMinDate ] = useState('');
 
   useEffect(() => {
     setMinDate(getTomorrowDate());
@@ -41,7 +41,7 @@ const TripDetail = ({ title, level,
       guests: guestsNumber,
       id: crypto.randomUUID()
     };
-    setMyBookings(prev=>{{return [...prev, myBooking];}});
+    setMyBookings(prev=>{{return [ ...prev, myBooking ];}});
   };
 
   return (

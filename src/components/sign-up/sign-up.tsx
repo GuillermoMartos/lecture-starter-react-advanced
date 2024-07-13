@@ -8,7 +8,7 @@ type Props = {
   setIsUserLogged: (value: boolean) => void;
 }
 
-const SignUp = ({setIsUserLogged}:Props): JSX.Element => {
+const SignUp = ({ setIsUserLogged }:Props): JSX.Element => {
   const navigate = useNavigate();
   const initialFields = {
     email: '',

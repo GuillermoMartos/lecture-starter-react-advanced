@@ -16,7 +16,7 @@ const Header = ({ isUserLogged, setIsUserLogged,
   allTrips, setSelectedTripsOptions }: Props): JSX.Element => {
   const navigate=useNavigate();
   useEffect(() => {
-  }, [isUserLogged]);
+  }, [ isUserLogged ]);
 
   function cleanFiltersAndLogout() {
     setSelectedTripsOptions(allTrips);

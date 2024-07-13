@@ -14,17 +14,17 @@ import { FILTER_OPTIONS, FiltersAppliedState, MyBooking, TripOption } from '../c
 import ProtectedRoute from '../common/protected-route';
 
 const App = (): JSX.Element => {
-  const [isUserLogged, setIsUserLogged] = useState(false);
-  const [allTripsOptions] = useState<TripOption[]>(trips);
-  const [filteredTripsOptions, setFilteredTripsOptions] =
+  const [ isUserLogged, setIsUserLogged ] = useState(false);
+  const [ allTripsOptions ] = useState<TripOption[]>(trips);
+  const [ filteredTripsOptions, setFilteredTripsOptions ] =
     useState<TripOption[]>(allTripsOptions);
-  const [filtersApplied, setFiltersApplied] =
+  const [ filtersApplied, setFiltersApplied ] =
         useState<FiltersAppliedState>({
           [FILTER_OPTIONS.DIFFICULTY]: null,
           [FILTER_OPTIONS.DURATION]: null,
           [FILTER_OPTIONS.SEARCH]: null
         });
-  const [myBookings, setMyBookings]=useState<MyBooking[]>([]);
+  const [ myBookings, setMyBookings ]=useState<MyBooking[]>([]);
   
   
   /* we use Layout to have header and footer in each page, and being inside Router Provider 
@@ -85,7 +85,7 @@ const App = (): JSX.Element => {
           path: '*',
           element:(<Navigate to={'/'} />)
         }
-      ]}
+      ] }
     
   ];
     

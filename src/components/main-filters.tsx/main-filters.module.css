@@ -15,6 +15,10 @@
     max-width: var(--container-width);
 }
 
+.trips-filter__form select {
+    border-radius: 15px;
+}
+
 .trips-filter__search {
     width: 100%;
     max-width: 350px;
@@ -29,4 +33,13 @@
     background-repeat: no-repeat;
     background-position: 15px 50%;
     background-size: 22px;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.trips-filter__search button {
+    border: none;
+    background-color: var(--color-white);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
