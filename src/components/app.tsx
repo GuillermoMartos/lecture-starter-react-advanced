@@ -33,7 +33,8 @@ const App = (): JSX.Element => {
   function Layout() {
     return (
       <>
-        <Header isUserLogged={isUserLogged} setIsUserLogged={setIsUserLogged} />
+        <Header isUserLogged={isUserLogged} setIsUserLogged={setIsUserLogged}
+          allTrips={allTripsOptions} setSelectedTripsOptions={setFilteredTripsOptions} />
         <Outlet />
         <Footer />
       </>

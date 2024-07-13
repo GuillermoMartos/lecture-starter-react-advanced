@@ -2,6 +2,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { filterTripById } from '../../common/helpers';
 import TripDetail from '../trip-detail/trip-detail';
 import { MyBooking } from '../../common/types';
+import sharedStyles from '../styles/shared-trip-card.module.css';
+import styles from './trip.module.css';
+
 
 
 type Props = {
@@ -18,36 +21,36 @@ const Trip = ({setMyBookings }:Props): JSX.Element => {
 
   return (
     <>
-      <main className="trip-page">
+      <main className={styles['trip-page']}>
         <h1 className="visually-hidden">Travel App</h1>
-        <div className="trip">
+        <div className={styles.trip}>
           <img
             data-test-id="trip-details-image"
             src={tripData.image}
-            className="trip__img"
+            className={styles.trip__img}
             alt="trip photo"
           />
-          <div className="trip__content">
-            <div className="trip-info">
+          <div className={styles.trip__content}>
+            <div className={sharedStyles['trip-info']}>
               <h3 data-test-id="trip-details-title"
-                className="trip-info__title">
+                className={sharedStyles['trip-info__title']}>
                 {tripData.title}
               </h3>
-              <div className="trip-info__content">
+              <div className={sharedStyles['trip-info__content']}>
                 <span
                   data-test-id="trip-details-duration"
                   className="trip-info__duration"
                 >
                   <strong>{ tripData.duration}</strong> days
                 </span>
-                <span data-test-id="trip-details-level" className="trip-info__level">
+                <span data-test-id="trip-details-level" className={sharedStyles['trip-info__level']}>
                   {tripData.level}
                 </span>
               </div>
             </div>
             <div
               data-test-id="trip-details-description"
-              className="trip__description"
+              className={styles.trip__description}
             >
               {tripData.description}
             </div>
@@ -55,14 +58,14 @@ const Trip = ({setMyBookings }:Props): JSX.Element => {
               <span>Price</span>
               <strong
                 data-test-id="trip-details-price-value"
-                className="trip-price__value"
+                className={sharedStyles['trip-price__value']}
               >
               ${tripData.price}
               </strong>
             </div>
             <button
               data-test-id="trip-details-button"
-              className="trip__button button"
+              className={`${styles.trip__button} button`}
               onClick={() => {
                 document.getElementById('hideable-modal')?.removeAttribute('hidden');
               }}

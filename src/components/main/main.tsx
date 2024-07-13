@@ -1,6 +1,7 @@
 import MainCard from '../main-card.tsx/main-card';
 import { FiltersAppliedState, TripOption } from '../../common/types';
 import MainFilters from '../main-filters.tsx/main-filters';
+import sharedStyles from '../styles/shared-trip-card.module.css';
 
 
 type Props = {
@@ -25,9 +26,9 @@ const Main = ({ allTrips, selectedTrips,
           filtersApplied={filtersApplied}
           setFiltersApplied={setFiltersApplied}
         />
-        <section className="trips">
+        <section className={sharedStyles.trip}>
           <h2 className="visually-hidden">Trips List</h2>
-          <ul className="trip-list">
+          <ul className={sharedStyles['trip-list']}>
             {selectedTrips.map(trip => {
               return (
                 <MainCard

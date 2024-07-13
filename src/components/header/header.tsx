@@ -3,16 +3,25 @@ import briefcaseSrc from '../../assets/images/briefcase.svg';
 import userSrc from '../../assets/images/user.svg';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TripOption } from '../../common/types';
 
 type Props = {
   isUserLogged: boolean,
   setIsUserLogged: (value: boolean) => void;
+  setSelectedTripsOptions: React.Dispatch<React.SetStateAction<TripOption[]>>;
+  allTrips: TripOption[]
 }
 
-const Header = ({ isUserLogged, setIsUserLogged }: Props): JSX.Element => {
+const Header = ({ isUserLogged, setIsUserLogged,
+  allTrips, setSelectedTripsOptions }: Props): JSX.Element => {
   const navigate=useNavigate();
   useEffect(() => {
   }, [isUserLogged]);
+
+  function cleanFiltersAndLogout() {
+    setSelectedTripsOptions(allTrips);
+    setIsUserLogged(false);
+  }
 
   return (
     <>
@@ -55,7 +64,7 @@ const Header = ({ isUserLogged, setIsUserLogged }: Props): JSX.Element => {
                         <button
                           data-test-id="header-profile-nav-sign-out"
                           className={`${styles['profile-nav__sign-out']} button clickeable-pointer`}
-                          onClick={()=>setIsUserLogged(false)}
+                          onClick={cleanFiltersAndLogout}
                         >
                       Sign Out
                         </button>

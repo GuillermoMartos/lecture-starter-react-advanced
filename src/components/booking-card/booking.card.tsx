@@ -1,4 +1,5 @@
 import { MyBooking } from '../../common/types';
+import styles from './booking-card.module.css';
 
 type Props = {
     myBooking: MyBooking,
@@ -17,8 +18,8 @@ const BookingCard = ({myBooking,
     
   return (
     <>
-      <li data-test-id="booking" className="booking">
-        <h3 data-test-id="booking-title" className="booking__title">{ myBooking.title}</h3>
+      <li data-test-id="booking" className={styles.booking}>
+        <h3 data-test-id="booking-title" className={styles.booking__title}>{ myBooking.title}</h3>
         <span data-test-id="booking-guests" className="booking__guests">
           {myBooking.guests} guests
         </span>
@@ -30,7 +31,7 @@ const BookingCard = ({myBooking,
         </span>
         <button
           data-test-id="booking-cancel"
-          className="booking__cancel"
+          className={styles.booking__cancel}
           title="Cancel booking"
           onClick={handleCancelBooking}
         >

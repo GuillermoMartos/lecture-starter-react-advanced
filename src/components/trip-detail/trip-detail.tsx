@@ -1,6 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { getTomorrowDate } from '../../common/helpers';
 import { MyBooking } from '../../common/types';
+import sharedStyles from '../styles/shared-trip-card.module.css';
+import style from './trip-detail.module.css';
+
 
 type Props = {
   title: string, level: string, duration: number, price: number,
@@ -43,21 +46,21 @@ const TripDetail = ({ title, level,
 
   return (
     <div id="hideable-modal" hidden>
-      <div className="modal">
-        <div data-test-id="book-trip-popup" className="book-trip-popup">
+      <div className={style.modal}>
+        <div data-test-id="book-trip-popup" className={style['book-trip-popup']}>
           <button
             data-test-id="book-trip-popup-close"
-            className="book-trip-popup__close"
+            className={style['book-trip-popup__close']}
             onClick={handleCloseModal}
           >
       ×
           </button>
-          <form className="book-trip-popup__form" autoComplete="off" onSubmit={handleSubmit}>
-            <div className="trip-info">
-              <h3 data-test-id="book-trip-popup-title" className="trip-info__title">
+          <form className={style['book-trip-popup__form']} autoComplete="off" onSubmit={handleSubmit}>
+            <div className={sharedStyles['trip-info']}>
+              <h3 data-test-id="book-trip-popup-title" className={sharedStyles['trip-info__title']}>
                 {title}
               </h3>
-              <div className="trip-info__content">
+              <div className={sharedStyles['trip-info__content']}>
                 <span
                   data-test-id="book-trip-popup-duration"
                   className="trip-info__duration"
@@ -66,7 +69,7 @@ const TripDetail = ({ title, level,
                 </span>
                 <span
                   data-test-id="book-trip-popup-level"
-                  className="trip-info__level"
+                  className={sharedStyles['trip-info__level']}
                 >
                   { level}
                 </span>
@@ -95,11 +98,11 @@ const TripDetail = ({ title, level,
                 required
               />
             </label>
-            <span className="book-trip-popup__total">
+            <span className={style['book-trip-popup__total']}>
         Total:
               <output
                 data-test-id="book-trip-popup-total-value"
-                className="book-trip-popup__total-value"
+                className={style['book-trip-popup__total-value']}
               >
           ${getPrice()}
               </output>

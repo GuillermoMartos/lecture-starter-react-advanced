@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent } from 'react';
 import { FiltersAppliedState, TripOption, FILTER_OPTIONS } from '../../common/types';
-
-
+import styles from './main-filters.module.css';
 
 type Props = {
   allTrips: TripOption[],
@@ -94,10 +93,10 @@ const MainFilters = ({ allTrips, setSelectedTrips,
   }
     
   return (
-    <section className="trips-filter">
+    <section className={styles['trips-filter']}>
       <h2 className="visually-hidden">Trips filter</h2>
-      <form className="trips-filter__form" autoComplete="off" onSubmit={(e)=> search(e)}>
-        <label className="trips-filter__search input">
+      <form className={styles['trips-filter__form']} autoComplete="off" onSubmit={(e)=> search(e)}>
+        <label className={`${styles['trips-filter__search']} input`}>
           <span className="visually-hidden">Search by name</span>
           <input
             data-test-id="filter-search"
