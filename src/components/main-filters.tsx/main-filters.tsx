@@ -13,7 +13,7 @@ type Props = {
 const MainFilters = ({ allTrips, setSelectedTrips,
   filtersApplied, setFiltersApplied }: Props)
   : JSX.Element => {
-  
+  filtersApplied;
   function handleDurationFilter(e:ChangeEvent<HTMLSelectElement>) {
     const value = e.target.value;
     let filteredTrips: TripOption[] = [];
