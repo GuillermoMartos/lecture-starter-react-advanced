@@ -1,5 +1,5 @@
 # For deployed version visit: 
-[deployed-link](https://travelapp-reactbasics-ixihtqabv-guillermomartos-projects.vercel.app/)
+[deployed-link](https://travelapp-reactbasics-guillermomartos-projects.vercel.app/)
 
 
 
