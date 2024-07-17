@@ -41,12 +41,13 @@ export type FiltersUpdatePayload =
   }
 
 export type MyBooking = {
-  title:string,
   date:string,
-  price: number,
-  level:string,
   guests: number,
-  id: string
+  tripId: string,
+  level: string,
+  price: number,
+  id: string,
+  title:string
 }
 
 export type UserSignInUpResponse={
@@ -128,7 +129,6 @@ export type CancelBookingResponse = 'true'
 
 export type CreateBookingPayload = {
   token: string;
-  id: string;
   payload:BookingCreateRequestBody
 };
 

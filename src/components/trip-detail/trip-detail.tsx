@@ -1,19 +1,27 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { getTomorrowDate } from '../../common/helpers';
-import { MyBooking } from '../../common/types';
 import sharedStyles from '../styles/shared-trip-card.module.css';
 import style from './trip-detail.module.css';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { allBookingsActions } from '../../store/myBookings/bookings';
+import { useNavigate } from 'react-router-dom';
 
 
 type Props = {
-  title: string, level: string, duration: number, price: number,
-  setMyBookings:React.Dispatch<React.SetStateAction<MyBooking[]>>
+  title: string, level: string, duration: number, price: number, tripId:string
 }
 
 const TripDetail = ({ title, level,
-  duration, price, setMyBookings }: Props): JSX.Element => {
+  duration, price, tripId }: Props): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const navigate= useNavigate();
   const [ guestsNumber, setGuestsNumber ] = useState<number>(1);
   const [ minDate, setMinDate ] = useState('');
+  const token= useAppSelector(state=>state.users.token);
+
+  if (!token) {
+    navigate('/sign-in');
+  }
 
   useEffect(() => {
     setMinDate(getTomorrowDate());
@@ -33,16 +41,15 @@ const TripDetail = ({ title, level,
   
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const myBooking: MyBooking = {
-      title,
-      date:(e.currentTarget.elements.namedItem('date')as HTMLInputElement).value,
-      price: getPrice(),
-      level,
+    const myBooking = {
+      tripId,
       guests: guestsNumber,
-      id: crypto.randomUUID()
+      date:(e.currentTarget.elements.namedItem('date')as HTMLInputElement).value,
     };
-    setMyBookings(prev=>{{return [ ...prev, myBooking ];}});
-  };
+    dispatch(allBookingsActions.createNewBooking(
+      { payload: myBooking, token: token as string }
+    ));
+  };  
 
   return (
     <div id="hideable-modal" hidden>

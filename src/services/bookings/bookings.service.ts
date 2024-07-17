@@ -25,10 +25,10 @@ export class Booking{
       { accept: Accept.JSON, authorization: `Bearer ${token}` });
   }
 
-  public createNewBooking(payload: BookingCreateRequestBody, token: string, id: string):
+  public createNewBooking(payload: BookingCreateRequestBody, token: string):
         Promise<MyBookingResponse>{
     return this.http.load(
-      this.getUrl(id),
+      this.getUrl(),
       {
         method:'POST',
         accept: Accept.JSON,

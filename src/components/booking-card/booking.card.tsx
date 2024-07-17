@@ -1,19 +1,25 @@
 import { MyBooking } from '../../common/types';
+import { allBookingsActions } from '../../store/myBookings/bookings';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import styles from './booking-card.module.css';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     myBooking: MyBooking,
-    setMyBookings:React.Dispatch<React.SetStateAction<MyBooking[]>>
   }
 
-const BookingCard = ({ myBooking,
-  setMyBookings }: Props): JSX.Element => {
+const BookingCard = ({ myBooking }: Props): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const navigate= useNavigate();
+  const token= useAppSelector(state=>state.users.token);
+
+  if (!token) {
+    navigate('/sign-in');
+  }
     
   function handleCancelBooking() {
-    setMyBookings(prev => {
-      const bookingsFiltered=prev.filter(trip=> trip.id!==myBooking.id);
-      return bookingsFiltered;
-    });
+    dispatch(allBookingsActions
+      .cancelBooking({ id: myBooking.id, token: token as string }));
   }
     
   return (
@@ -22,6 +28,7 @@ const BookingCard = ({ myBooking,
         <h3 data-test-id="booking-title" className={styles.booking__title}>{ myBooking.title}</h3>
         <span data-test-id="booking-guests" className="booking__guests">
           {myBooking.guests} guests
+          {myBooking.level} LEVEL!!!
         </span>
         <span data-test-id="booking-date" className="booking__date">
           {myBooking.date}

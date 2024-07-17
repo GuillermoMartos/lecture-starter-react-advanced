@@ -7,16 +7,11 @@ import SignIn from './sign-in/sign-in';
 import Trip from './trip/trip';
 import Main from './main/main';
 import Bookings from './bookings/bookings';
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { MyBooking } from '../common/types';
 import ProtectedRoute from '../common/protected-route';
 import CheckedRoute from '../common/checked-route';
 
-const App = (): JSX.Element => {
-  const [ myBookings, setMyBookings ]=useState<MyBooking[]>([]);
-  
-  
+const App = (): JSX.Element => {  
   /* we use Layout to have header and footer in each page, and being inside Router Provider 
   allow us to have Link/Navigate available. And Outlet will be the space to render children 
   (the rest of the components) */
@@ -54,7 +49,7 @@ const App = (): JSX.Element => {
           path: '/trip/:tripId',
           element: (
             <ProtectedRoute>
-              <Trip setMyBookings={setMyBookings} />
+              <Trip/>
             </ProtectedRoute>
           )
         },
@@ -69,7 +64,7 @@ const App = (): JSX.Element => {
           path: '/bookings',
           element: (
             <ProtectedRoute>
-              <Bookings myBookings={myBookings} setMyBookings={setMyBookings} />
+              <Bookings />
             </ProtectedRoute>
           )
         },

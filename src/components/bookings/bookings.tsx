@@ -1,21 +1,17 @@
-import { MyBooking } from '../../common/types';
+
 import BookingCard from '../booking-card/booking.card';
+import { useAppSelector } from '../hooks/redux-hooks';
 import styles from './bookings.module.css';
 
-type Props = {
-  myBookings: MyBooking[],
-  setMyBookings:React.Dispatch<React.SetStateAction<MyBooking[]>>
-}
-
-const Bookings = ({ myBookings, setMyBookings }:Props): JSX.Element => {
+const Bookings = (): JSX.Element => {
+  const myBookings= useAppSelector(state=> state.bookings.myBookings);
   return (
     <>
       <main className={styles['bookings-page']}>
         <h1 className="visually-hidden">Travel App</h1>
         <ul className={styles.bookings__list}>
           {myBookings && myBookings.map(booking => {
-            return <BookingCard key={booking.id} myBooking={booking}
-              setMyBookings={setMyBookings} />;
+            return <BookingCard key={booking.id} myBooking={booking}/>;
           })}
         </ul>
       </main>

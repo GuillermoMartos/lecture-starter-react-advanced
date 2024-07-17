@@ -1,25 +1,18 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { filterTripById } from '../../common/helpers';
 import TripDetail from '../trip-detail/trip-detail';
-import { MyBooking } from '../../common/types';
 import sharedStyles from '../styles/shared-trip-card.module.css';
 import styles from './trip.module.css';
 import { useAppSelector } from '../hooks/redux-hooks';
 
-
-
-type Props = {
-  setMyBookings:React.Dispatch<React.SetStateAction<MyBooking[]>>
-}
-
-const Trip = ({ setMyBookings }: Props): JSX.Element => {
-  const tripsData= useAppSelector(state=> state.trips);
+const Trip = (): JSX.Element => {
+  const tripsData= useAppSelector(state=> state.trips.allTrips);
   const { tripId } = useParams<{ tripId: string }>();
   const navigate=useNavigate();
   if (!tripId) {
     navigate('/');
   }
-  const tripData = filterTripById(tripId as string, tripsData.allTrips);
+  const tripData = filterTripById(tripId as string, tripsData);
 
   return (
     <>
@@ -78,8 +71,8 @@ const Trip = ({ setMyBookings }: Props): JSX.Element => {
         </div>
       </main>
       <TripDetail title={tripData.title} price={tripData.price}
-        level={tripData.level} duration={tripData.duration}
-        setMyBookings={setMyBookings} />
+        level={tripData.level} duration={tripData.duration} tripId={tripData.id}
+      />
     </>
   );
 };

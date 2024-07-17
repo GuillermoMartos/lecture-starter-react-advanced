@@ -47,15 +47,15 @@ const { reducer, actions } = createSlice(
         state.status= DataStatus.ERROR;
       });
     
-      builder.addCase(bookingsActions.cancelBooking.pending, (state) => {
+      /*       builder.addCase(bookingsActions.cancelBooking.pending, (state) => {
         state.status= DataStatus.PENDING;
-      });
-      builder.addCase(bookingsActions.cancelBooking.fulfilled, (state) => {
+      }); */
+      /*  builder.addCase(bookingsActions.cancelBooking.fulfilled, (state) => {
         state.status = DataStatus.SUCCESS;
       });
       builder.addCase(bookingsActions.cancelBooking.rejected, (state) => {
         state.status= DataStatus.ERROR;
-      });
+      }); */
 
     },
   }
