@@ -4,9 +4,6 @@ import { AllTripsResponse, AsyncThunkConfig, FiltersAppliedState, FiltersUpdateP
 import {  TRIPS_TYPES } from '../../common/enums';
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-
-
-
 const filterTrips = createAction(
   TRIPS_TYPES.UPDATE_FILTERED_TRIPS,
   (status:FiltersAppliedState) => {

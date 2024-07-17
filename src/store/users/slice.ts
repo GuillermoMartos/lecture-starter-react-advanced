@@ -59,7 +59,8 @@ const { reducer, actions } = createSlice(
         state.status= DataStatus.PENDING;
       });
       builder.addCase(userActions.userAuth.fulfilled, (state, action) => {
-        state.username= action.payload.fullName;
+        state.username = action.payload.fullName;
+        state.token = action.meta.arg;
         state.status= DataStatus.SUCCESS;
       });
       builder.addCase(userActions.userAuth.rejected, (state) => {

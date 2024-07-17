@@ -1,9 +1,9 @@
 import { tripsActions } from './actions';
 import { tripsReducerActions, tripsReducer } from './slice';
 
-const allUserActions = {
+const allTripsActions = {
   ...tripsReducerActions,
   ...tripsActions,
 };
 
-export { allUserActions, tripsReducer };
+export { allTripsActions, tripsReducer };

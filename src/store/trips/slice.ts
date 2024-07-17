@@ -44,7 +44,10 @@ const { reducer, actions } = createSlice(
         state.status= DataStatus.PENDING;
       });
       builder.addCase(tripsActions.getAllAPITrips.fulfilled, (state, action) => {
-        const mappedTripsResponse= mapAllTripsResponseToTripOption(action.payload);
+        const mappedTripsResponse = mapAllTripsResponseToTripOption(action.payload);
+        if (state.filteredTrips.length===0) {
+          state.filteredTrips=mappedTripsResponse;
+        }
         state.allTrips= mappedTripsResponse;
         state.status = DataStatus.SUCCESS;
       });
