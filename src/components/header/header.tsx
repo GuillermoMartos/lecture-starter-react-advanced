@@ -11,11 +11,13 @@ import { DataStatus } from '../../common/enums';
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const username= useAppSelector(state=>state.users.username);
+  const username = useAppSelector(state => state.users.username);
+  const token=useAppSelector(state=>state.users.token);
 
   function logoutUser() {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN);
     dispatch(allUserActions.setStatus(DataStatus.IDLE));
+    dispatch(allUserActions.setTokenToNull(null));
     navigate('/sign-in');
   }
 
@@ -30,7 +32,7 @@ const Header = (): JSX.Element => {
           </a>
           
           <nav data-test-id="header-nav" className={styles.header__nav}>
-            <ul className={styles['nav-header__list']}>
+            <ul className={`${styles['nav-header__list']} ${token? null : 'visually-hidden'}`}>
               <li className={styles['nav-header__item']} title="Bookings">
                 <a
                   data-test-id="header-bookings-link"

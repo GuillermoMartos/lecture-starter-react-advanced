@@ -2,6 +2,7 @@ import { Middleware } from 'redux';
 import { rootReducer } from './root-reducer';
 import { configureStore } from '@reduxjs/toolkit';
 import { bookingsService, tripsService, usersService } from '../services/services';
+import authListenerMiddleware from './middlewares.ts/auth-middleware';
 
 const logger: Middleware = (store) => (next) => (action) => {
   console.info('state before', store.getState());
@@ -23,5 +24,5 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     thunk: { extraArgument }
-  }).concat(logger),
+  }).concat(logger).prepend(authListenerMiddleware.middleware),
 });

@@ -14,6 +14,15 @@ const setStatus = createAction(
   }
 );
 
+const setTokenToNull = createAction(
+  USER_TYPES.SET_NULL_TOKEN,
+  (status: null) => {
+    return {
+      payload:status
+    };
+  }
+);
+
 const userSignIn =
     createAsyncThunk<UserSignInUpResponse, SignInRequestBody, AsyncThunkConfig>
     (USER_TYPES.SIGN_IN,
@@ -48,5 +57,6 @@ export const userActions = {
   userSignIn,
   userSignUp,
   userAuth,
-  setStatus
+  setStatus,
+  setTokenToNull
 };

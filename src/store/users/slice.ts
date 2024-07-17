@@ -26,6 +26,10 @@ const { reducer, actions } = createSlice(
       builder.addCase(userActions.setStatus, (state, action) => {
         state.status= action.payload;
       });
+      
+      builder.addCase(userActions.setTokenToNull, (state, action) => {
+        state.token= action.payload;
+      });
 
       builder.addCase(userActions.userSignIn.pending, (state) => {
         state.status= DataStatus.PENDING;

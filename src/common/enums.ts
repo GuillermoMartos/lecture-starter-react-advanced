@@ -24,6 +24,7 @@ interface UserTypes {
     SIGN_UP: string;
     AUTH: string;
     SET_STATUS: string;
+    SET_NULL_TOKEN: string;
 }
 
 export const USER_TYPES:UserTypes = {
@@ -31,7 +32,8 @@ export const USER_TYPES:UserTypes = {
   SIGN_IN: 'users/sign-in',
   SIGN_UP: 'users/sign-up',
   AUTH: 'users/auth',
-  SET_STATUS: 'users/set-status'
+  SET_STATUS: 'users/set-status',
+  SET_NULL_TOKEN: 'users/set-null-token'
 };
 
 interface TripsTypes {
