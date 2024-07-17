@@ -1,4 +1,4 @@
-import { AllTripsResponse, TripOption, TripResponse } from '../../common/types';
+import { AllMyBookingsResponse, AllTripsResponse, MyBooking, TripOption, TripResponse } from '../../common/types';
 
 export function mapAllTripsResponseToTripOption
 (tripsAPIResponse: AllTripsResponse): TripOption[] {
@@ -32,4 +32,21 @@ export function mapTripResponseByIdToTripOption
   };
 
   return tripOptionMapped;
+}
+
+export function mapAllBookingsResponseToMyBooking
+(bookingsAPIResponse: AllMyBookingsResponse): MyBooking[] {
+  const myBookingsMapped: MyBooking[] = [];
+  for (const booking of bookingsAPIResponse) {
+    myBookingsMapped.push({
+      title:booking.trip.title,
+      date:booking.date,
+      price: booking.totalPrice,
+      level:'fetch it',
+      guests: booking.guests,
+      id: booking.id
+    }
+    );
+  }
+  return myBookingsMapped;
 }

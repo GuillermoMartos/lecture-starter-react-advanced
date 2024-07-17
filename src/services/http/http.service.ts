@@ -58,4 +58,8 @@ export class Http {
     }
     throw error;
   }
+
+  public stringifyPayload(payload:Record<string, unknown>): BodyInit{
+    return JSON.stringify(payload);
+  }
 }

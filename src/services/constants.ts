@@ -6,7 +6,8 @@ export enum ContentType {
   }
 
 export enum Accept {
-    JSON = 'application/json',
+  JSON = 'application/json',
+  TEXT = 'text/plain',
   }
   
 export enum HttpHeader {

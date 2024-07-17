@@ -99,4 +99,37 @@ export type TripResponse= {
   createdAt: string
 }
 
-export type AllTripsResponse= TripResponse[]
+export type AllTripsResponse = TripResponse[]
+
+export type MyBookingResponse= {
+  id: string,
+  tripId: string,
+  userId: string,
+  guests: number,
+  totalPrice: number,
+  date: string,
+  createdAt: string,
+  trip: {
+    title: string,
+    duration: number,
+    price: number
+  }
+}
+
+export type AllMyBookingsResponse = MyBookingResponse[]
+
+export type BookingCreateRequestBody={
+  tripId: string,
+  guests: number,
+  date: string
+}
+
+export type CancelBookingResponse = 'true'
+
+export type CreateBookingPayload = {
+  token: string;
+  id: string;
+  payload:BookingCreateRequestBody
+};
+
+export type CancelBookingByIdPayload = GetTripByIdPayload

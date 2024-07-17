@@ -12,3 +12,5 @@ export const USER_BASE_AND_PATHS = {
 };
 
 export const TRIPS_BASE_PATH = 'trips/';
+
+export const BOOKINGS_BASE_PATH = 'bookings/';

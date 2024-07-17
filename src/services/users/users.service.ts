@@ -32,7 +32,7 @@ export class Users{
         method:'POST',
         accept: Accept.JSON,
         contentType: ContentType.JSON,
-        payload: this.stringifyPayload(payload)
+        payload: this.http.stringifyPayload(payload),
       });
   }
     
@@ -43,15 +43,12 @@ export class Users{
         method:'POST',
         accept: Accept.JSON,
         contentType: ContentType.JSON,
-        payload: this.stringifyPayload(payload)
+        payload: this.http.stringifyPayload(payload),
       });
   }
     
   private getUrl(path:string):string {
     return `${this.baseUrl}${this.basePath}${path}`;
   }
-    
-  private stringifyPayload(payload:Record<string, unknown>): BodyInit{
-    return JSON.stringify(payload);
-  }
+  
 }

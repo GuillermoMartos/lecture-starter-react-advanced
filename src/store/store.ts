@@ -1,7 +1,7 @@
 import { Middleware } from 'redux';
 import { rootReducer } from './root-reducer';
 import { configureStore } from '@reduxjs/toolkit';
-import { tripsService, usersService } from '../services/services';
+import { bookingsService, tripsService, usersService } from '../services/services';
 
 const logger: Middleware = (store) => (next) => (action) => {
   console.info('state before', store.getState());
@@ -10,10 +10,12 @@ const logger: Middleware = (store) => (next) => (action) => {
   console.info('state after action', result);
   return result;
 };
+// we must delete this!!!
 
 export const extraArgument = {
   usersService,
-  tripsService
+  tripsService,
+  bookingsService
 };
 
 
