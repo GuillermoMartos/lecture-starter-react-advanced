@@ -1,9 +1,8 @@
 import { FILTER_OPTIONS, FiltersAppliedState, TripOption } from '../../common/types';
-import { TripsState } from '../trips/reducer';
 
 export const applyFilters =
-    (filters: FiltersAppliedState, state: TripsState): TripOption[] => {
-      let tripsToFilter = state.allTrips.slice();
+    (filters: FiltersAppliedState, allTripsState: TripOption[]): TripOption[] => {
+      let tripsToFilter = allTripsState.slice();
           
       if (filters[FILTER_OPTIONS.DURATION]) {
         switch (filters[FILTER_OPTIONS.DURATION]) {

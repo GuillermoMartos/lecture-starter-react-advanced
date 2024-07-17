@@ -26,14 +26,20 @@ export type FiltersAppliedState = {
         SEARCH: string|null;
         DURATION: string|null;
         DIFFICULTY: string|null;
-      };
-      
+};  
+
 export enum FILTER_OPTIONS{
-        DURATION='DURATION',
-        DIFFICULTY='DIFFICULTY',
-        SEARCH='SEARCH'
+  DURATION='DURATION',
+  DIFFICULTY='DIFFICULTY',
+  SEARCH='SEARCH'
 }
-      
+
+export type FiltersUpdatePayload =
+  {
+    value: string | null,
+    name: FILTER_OPTIONS
+  }
+
 export type MyBooking = {
   title:string,
   date:string,
@@ -76,3 +82,21 @@ export type AsyncThunkConfig = {
   dispatch: AppDispatch,
   extra: typeof extraArgument
 }
+
+export type GetTripByIdPayload = {
+  token: string;
+  id: string;
+};
+
+export type TripResponse= {
+  id: string,
+  title: string,
+  description: string,
+  level: string,
+  duration:number,
+  price:number,
+  image: string,
+  createdAt: string
+}
+
+export type AllTripsResponse= TripResponse[]

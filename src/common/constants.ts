@@ -10,3 +10,5 @@ export const USER_BASE_AND_PATHS = {
     AUTH: 'authenticated-user'
   }
 };
+
+export const TRIPS_BASE_PATH = 'trips/';

@@ -6,9 +6,9 @@ import { userActions } from './actions';
 import { LOCAL_STORAGE_TOKEN } from '../../common/constants';
 
 type UsersState = {
-    status: ValueOf<typeof DataStatus>,
+  status: ValueOf<typeof DataStatus>,
   token: string | null
-    username:  string | null
+  username:  string | null
 }
 
 const initialUserState: UsersState = {
