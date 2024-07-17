@@ -3,14 +3,15 @@ import briefcaseSrc from '../../assets/images/briefcase.svg';
 import userSrc from '../../assets/images/user.svg';
 import { useNavigate } from 'react-router-dom';
 import { LOCAL_STORAGE_TOKEN } from '../../common/constants';
-import { useAppDispatch } from '../hooks/redux-hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { allUserActions } from '../../store/users/users';
 import { DataStatus } from '../../common/enums';
 
 
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
-  const dispatch= useAppDispatch();
+  const dispatch = useAppDispatch();
+  const username= useAppSelector(state=>state.users.username);
 
   function logoutUser() {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN);
@@ -55,7 +56,7 @@ const Header = (): JSX.Element => {
                     <li
                       data-test-id="header-profile-nav-username"
                     >
-                    John Doe
+                      {username ?? username}
                     </li>
                     <li>
                       <button

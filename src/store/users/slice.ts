@@ -7,12 +7,14 @@ import { LOCAL_STORAGE_TOKEN } from '../../common/constants';
 
 type UsersState = {
     status: ValueOf<typeof DataStatus>,
-    token: string|null
+  token: string | null
+    username:  string | null
 }
 
 const initialUserState: UsersState = {
   status: DataStatus.IDLE,
-  token:null
+  token: null,
+  username: null
 };
 
 const { reducer, actions } = createSlice(
@@ -30,8 +32,9 @@ const { reducer, actions } = createSlice(
       });
       builder.addCase(userActions.userSignIn.fulfilled, (state, action) => {
         state.token = action.payload.token;
+        state.username= action.payload.user.fullName;
         localStorage.setItem(LOCAL_STORAGE_TOKEN, action.payload.token);
-        state.status= DataStatus.SUCCESS;
+        state.status = DataStatus.SUCCESS;
       });
       builder.addCase(userActions.userSignIn.rejected, (state) => {
         localStorage.removeItem(LOCAL_STORAGE_TOKEN);
@@ -43,6 +46,7 @@ const { reducer, actions } = createSlice(
       });
       builder.addCase(userActions.userSignUp.fulfilled, (state, action) => {
         state.token = action.payload.token;
+        state.username= action.payload.user.fullName;
         localStorage.setItem(LOCAL_STORAGE_TOKEN, action.payload.token);
         state.status= DataStatus.SUCCESS;
       });
@@ -54,7 +58,8 @@ const { reducer, actions } = createSlice(
       builder.addCase(userActions.userAuth.pending, (state) => {
         state.status= DataStatus.PENDING;
       });
-      builder.addCase(userActions.userAuth.fulfilled, (state) => {
+      builder.addCase(userActions.userAuth.fulfilled, (state, action) => {
+        state.username= action.payload.fullName;
         state.status= DataStatus.SUCCESS;
       });
       builder.addCase(userActions.userAuth.rejected, (state) => {
