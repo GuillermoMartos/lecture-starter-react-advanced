@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { BOOKINGS_TYPES, DataStatus } from '../../common/enums';
 import { ValueOf } from '../../services/constants';
 import { bookingsActions } from './actions';
-import { mapAllBookingsResponseToMyBooking } from '../helpers/mappers';
+import { mapAllBookingsResponseToMyBooking, mapBookingResponseToMyBooking } from '../helpers/mappers';
 
 type BookingsState = {
   status: ValueOf<typeof DataStatus>,
@@ -40,22 +40,25 @@ const { reducer, actions } = createSlice(
       builder.addCase(bookingsActions.createNewBooking.pending, (state) => {
         state.status= DataStatus.PENDING;
       });
-      builder.addCase(bookingsActions.createNewBooking.fulfilled, (state) => {
+      builder.addCase(bookingsActions.createNewBooking.fulfilled, (state, action) => {
+        const mappedBooking = mapBookingResponseToMyBooking(action.payload);
+        state.myBookings = [ ...state.myBookings, mappedBooking ];
         state.status = DataStatus.SUCCESS;
       });
       builder.addCase(bookingsActions.createNewBooking.rejected, (state) => {
         state.status= DataStatus.ERROR;
       });
     
-      /*       builder.addCase(bookingsActions.cancelBooking.pending, (state) => {
+      builder.addCase(bookingsActions.cancelBooking.pending, (state) => {
         state.status= DataStatus.PENDING;
-      }); */
-      /*  builder.addCase(bookingsActions.cancelBooking.fulfilled, (state) => {
+      });
+      builder.addCase(bookingsActions.cancelBooking.fulfilled, (state, action) => {
+        console.log(action.meta.arg, 'aca le saco el id :)');
         state.status = DataStatus.SUCCESS;
       });
       builder.addCase(bookingsActions.cancelBooking.rejected, (state) => {
         state.status= DataStatus.ERROR;
-      }); */
+      });
 
     },
   }

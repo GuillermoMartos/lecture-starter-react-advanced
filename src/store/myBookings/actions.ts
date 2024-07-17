@@ -26,7 +26,7 @@ const getAllMyBookings =
 
 const createNewBooking =
   createAsyncThunk<MyBookingResponse, CreateBookingPayload, AsyncThunkConfig>
-  (BOOKINGS_TYPES.CANCEL_MY_BOOKING,
+  (BOOKINGS_TYPES.CREATE_NEW_BOOKING,
     async ( { token, payload },{ extra }) => {
       const { bookingsService } = extra;
    

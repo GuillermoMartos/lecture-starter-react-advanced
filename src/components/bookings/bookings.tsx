@@ -1,10 +1,21 @@
 
+import { useEffect } from 'react';
 import BookingCard from '../booking-card/booking.card';
-import { useAppSelector } from '../hooks/redux-hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import styles from './bookings.module.css';
+import { allBookingsActions } from '../../store/myBookings/bookings';
 
 const Bookings = (): JSX.Element => {
-  const myBookings= useAppSelector(state=> state.bookings.myBookings);
+  const dispatch= useAppDispatch();
+  const myBookings = useAppSelector(state => state.bookings.myBookings);
+  const token = useAppSelector((state) => state.users.token);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(allBookingsActions.getAllMyBookings(token));
+    }
+  }, [ dispatch, token ]);
+  
   return (
     <>
       <main className={styles['bookings-page']}>

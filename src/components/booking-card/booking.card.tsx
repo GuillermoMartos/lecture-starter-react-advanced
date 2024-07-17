@@ -28,7 +28,6 @@ const BookingCard = ({ myBooking }: Props): JSX.Element => {
         <h3 data-test-id="booking-title" className={styles.booking__title}>{ myBooking.title}</h3>
         <span data-test-id="booking-guests" className="booking__guests">
           {myBooking.guests} guests
-          {myBooking.level} LEVEL!!!
         </span>
         <span data-test-id="booking-date" className="booking__date">
           {myBooking.date}
