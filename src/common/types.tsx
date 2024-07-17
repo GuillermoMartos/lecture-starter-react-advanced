@@ -1,3 +1,6 @@
+import { AppDispatch, RootState } from '../components/hooks/types';
+import { extraArgument } from '../store/store';
+
 export type MainCardProps = {
     price: number,
     title: string,
@@ -38,4 +41,38 @@ export type MyBooking = {
   level:string,
   guests: number,
   id: string
+}
+
+export type UserSignInUpResponse={
+  user: {
+      id: string,
+      fullName: string,
+      email: string,
+      createdAt: string
+  },
+  token: string
+}
+
+export type UserAuthResponse={
+  id: string,
+  fullName: string,
+  email: string,
+  createdAt: string
+}
+
+export type SignInRequestBody = {
+  email: string,
+  password: string
+}
+
+export type SignUpRequestBody = {
+  email: string,
+  password: string,
+  fullName: string
+}
+
+export type AsyncThunkConfig = {
+  state: RootState,
+  dispatch: AppDispatch,
+  extra: typeof extraArgument
 }

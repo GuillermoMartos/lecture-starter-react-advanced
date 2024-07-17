@@ -3,12 +3,12 @@ import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FORM_VALIDATORS from '../../common/validations';
 import useForm from '../hooks/hooks';
+import { allUserActions } from '../../store/users/users';
+import { useAppDispatch } from '../hooks/redux-hooks';
 
-type Props = {
-  setIsUserLogged: (value: boolean) => void;
-}
 
-const SignIn = ({ setIsUserLogged }: Props): JSX.Element => {
+const SignIn = (): JSX.Element => {
+  const dispatch=useAppDispatch();
   const initialFields = {
     email: '',
     password: '',
@@ -29,8 +29,10 @@ const SignIn = ({ setIsUserLogged }: Props): JSX.Element => {
     if (errors.email || errors.password) {
       return;
     }
-    
-    setIsUserLogged(true);
+    dispatch(allUserActions.userSignIn({
+      password: formData.password,
+      email: formData.email
+    }));
     navigate('/');
   }
 

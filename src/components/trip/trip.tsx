@@ -4,6 +4,7 @@ import TripDetail from '../trip-detail/trip-detail';
 import { MyBooking } from '../../common/types';
 import sharedStyles from '../styles/shared-trip-card.module.css';
 import styles from './trip.module.css';
+import { useAppSelector } from '../hooks/redux-hooks';
 
 
 
@@ -11,13 +12,14 @@ type Props = {
   setMyBookings:React.Dispatch<React.SetStateAction<MyBooking[]>>
 }
 
-const Trip = ({ setMyBookings }:Props): JSX.Element => {
+const Trip = ({ setMyBookings }: Props): JSX.Element => {
+  const tripsData= useAppSelector(state=> state.trips);
   const { tripId } = useParams<{ tripId: string }>();
   const navigate=useNavigate();
   if (!tripId) {
     navigate('/');
   }
-  const tripData = filterTripById(tripId as string);
+  const tripData = filterTripById(tripId as string, tripsData.allTrips);
 
   return (
     <>

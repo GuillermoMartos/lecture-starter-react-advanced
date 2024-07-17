@@ -26,6 +26,6 @@ module.exports = {
     'array-bracket-spacing': ['error', 'always'],
     'quotes': ['error', 'single'],
     'semi': ['error', 'always'],
-    'no-console': ["error"]
+    'no-console': ['error',{ allow: ['info', 'error']}],
   },
 }

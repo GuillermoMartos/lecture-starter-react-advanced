@@ -9,21 +9,11 @@ import Main from './main/main';
 import Bookings from './bookings/bookings';
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import trips from '../assets/data/trips.json';
-import { FILTER_OPTIONS, FiltersAppliedState, MyBooking, TripOption } from '../common/types';
+import { MyBooking } from '../common/types';
 import ProtectedRoute from '../common/protected-route';
+import CheckedRoute from '../common/checked-route';
 
 const App = (): JSX.Element => {
-  const [ isUserLogged, setIsUserLogged ] = useState(false);
-  const [ allTripsOptions ] = useState<TripOption[]>(trips);
-  const [ filteredTripsOptions, setFilteredTripsOptions ] =
-    useState<TripOption[]>(allTripsOptions);
-  const [ filtersApplied, setFiltersApplied ] =
-        useState<FiltersAppliedState>({
-          [FILTER_OPTIONS.DIFFICULTY]: null,
-          [FILTER_OPTIONS.DURATION]: null,
-          [FILTER_OPTIONS.SEARCH]: null
-        });
   const [ myBookings, setMyBookings ]=useState<MyBooking[]>([]);
   
   
@@ -33,8 +23,7 @@ const App = (): JSX.Element => {
   function Layout() {
     return (
       <>
-        <Header isUserLogged={isUserLogged} setIsUserLogged={setIsUserLogged}
-          allTrips={allTripsOptions} setSelectedTripsOptions={setFilteredTripsOptions} />
+        <Header />
         <Outlet />
         <Footer />
       </>
@@ -47,16 +36,24 @@ const App = (): JSX.Element => {
       element: <Layout />, children: [
         {
           path: '/sign-up',
-          element: (<SignUp setIsUserLogged={setIsUserLogged}/>)
+          element: (
+            <CheckedRoute>
+              <SignUp />
+            </CheckedRoute>
+          )
         },
         {
           path: '/sign-in',
-          element: (<SignIn setIsUserLogged={setIsUserLogged}/>)
+          element: (
+            <CheckedRoute>
+              <SignIn />
+            </CheckedRoute>
+          )
         },
         {
           path: '/trip/:tripId',
           element: (
-            <ProtectedRoute isUserLogged={isUserLogged}>
+            <ProtectedRoute>
               <Trip setMyBookings={setMyBookings} />
             </ProtectedRoute>
           )
@@ -64,19 +61,14 @@ const App = (): JSX.Element => {
         {
           path: '/',
           element: (
-            <ProtectedRoute isUserLogged={isUserLogged}>
-              <Main
-                allTrips={allTripsOptions}
-                selectedTrips={filteredTripsOptions}
-                setSelectedTripsOptions={setFilteredTripsOptions}
-                filtersApplied={filtersApplied}
-                setFiltersApplied={setFiltersApplied} />
+            <ProtectedRoute>
+              <Main/>
             </ProtectedRoute>)
         },
         {
           path: '/bookings',
           element: (
-            <ProtectedRoute isUserLogged={isUserLogged}>
+            <ProtectedRoute>
               <Bookings myBookings={myBookings} setMyBookings={setMyBookings} />
             </ProtectedRoute>
           )

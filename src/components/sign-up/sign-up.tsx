@@ -3,12 +3,11 @@ import FORM_VALIDATORS from '../../common/validations';
 import useForm from '../hooks/hooks';
 import sharedStyles from '../styles/shared-signin-signup.module.css';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../hooks/redux-hooks';
+import { allUserActions } from '../../store/users/users';
 
-type Props = {
-  setIsUserLogged: (value: boolean) => void;
-}
-
-const SignUp = ({ setIsUserLogged }:Props): JSX.Element => {
+const SignUp = (): JSX.Element => {
+  const dispatch= useAppDispatch();
   const navigate = useNavigate();
   const initialFields = {
     email: '',
@@ -31,7 +30,12 @@ const SignUp = ({ setIsUserLogged }:Props): JSX.Element => {
       return;
     }
     
-    setIsUserLogged(true);
+    dispatch(allUserActions.userSignUp({
+      //fullName is granted from validations
+      fullName: (formData.fullName as string),
+      email: formData.email,
+      password: formData.password
+    }));
     navigate('/');
   }
 

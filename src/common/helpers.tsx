@@ -1,8 +1,7 @@
 import { TripOption } from './types';
-import trips from '../assets/data/trips.json';
 
 
-export const filterTripById = (id:string):TripOption => {
+export const filterTripById = (id:string, trips:TripOption[ ]):TripOption => {
   const filteredTrip = trips.filter(trip => {
     return trip.id === id;
   });
