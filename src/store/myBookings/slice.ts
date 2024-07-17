@@ -53,7 +53,8 @@ const { reducer, actions } = createSlice(
         state.status= DataStatus.PENDING;
       });
       builder.addCase(bookingsActions.cancelBooking.fulfilled, (state, action) => {
-        console.log(action.meta.arg, 'aca le saco el id :)');
+        const { id } = action.meta.arg;
+        state.myBookings= state.myBookings.filter(el=> el.id !== id);
         state.status = DataStatus.SUCCESS;
       });
       builder.addCase(bookingsActions.cancelBooking.rejected, (state) => {
