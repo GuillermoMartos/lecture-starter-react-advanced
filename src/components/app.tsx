@@ -10,6 +10,8 @@ import Bookings from './bookings/bookings';
 import { Outlet } from 'react-router-dom';
 import ProtectedRoute from '../common/protected-route';
 import CheckedRoute from '../common/checked-route';
+import { ToastContainer } from 'react-toastify';
+
 
 const App = (): JSX.Element => {  
   /* we use Layout to have header and footer in each page, and being inside Router Provider 
@@ -19,6 +21,7 @@ const App = (): JSX.Element => {
     return (
       <>
         <Header />
+        <ToastContainer/>
         <Outlet />
         <Footer />
       </>
@@ -77,10 +80,8 @@ const App = (): JSX.Element => {
   ];
     
     
-  return <> 
-
-    <RouterProvider routes={routes} />
-  </>;
+  return <RouterProvider routes={routes} />
+  ;
 };
 
 export default App;

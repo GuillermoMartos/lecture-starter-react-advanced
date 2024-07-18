@@ -42,6 +42,7 @@ interface TripsTypes {
     GET_TRIP_BY_ID: string;
     UPDATE_FILTERED_TRIPS: string;
     UPDATE_FILTER_OPTIONS: string;
+    RESET_FILTER_OPTIONS: string;
     SET_STATUS: string;
 }
 
@@ -51,6 +52,7 @@ export const TRIPS_TYPES:TripsTypes = {
   GET_TRIP_BY_ID: 'trips/get-trip-by-id',
   UPDATE_FILTERED_TRIPS: 'trips/update-filtered-trips',
   UPDATE_FILTER_OPTIONS: 'trips/update-filters-options',
+  RESET_FILTER_OPTIONS: 'trips/reset-filters-options',
   SET_STATUS: 'trips/set-status'
 };
 

@@ -22,6 +22,15 @@ const changeFilters = createAction(
   }
 );
 
+const resetAllFilters = createAction(
+  TRIPS_TYPES.RESET_FILTER_OPTIONS,
+  (status:FiltersAppliedState) => {
+    return {
+      payload:status
+    };
+  }
+);
+
 const getAllAPITrips = createAsyncThunk<AllTripsResponse, string, AsyncThunkConfig>
 (TRIPS_TYPES.GET_ALL_TRIPS,
   async ( token,{ extra }) => {
@@ -43,5 +52,6 @@ export const tripsActions = {
   getAllAPITrips,
   getAPITripById,
   changeFilters,
-  filterTrips
+  filterTrips,
+  resetAllFilters
 };

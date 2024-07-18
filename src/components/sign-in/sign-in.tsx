@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import FORM_VALIDATORS from '../../common/validations';
 import useForm from '../hooks/hooks';
 import { allUserActions } from '../../store/users/users';
-import { useAppDispatch } from '../hooks/redux-hooks';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { DataStatus } from '../../common/enums';
+import Loader from '../loader/loader';
 
 
 const SignIn = (): JSX.Element => {
+  const userStatus= useAppSelector(state=> state.users.status);
   const dispatch=useAppDispatch();
   const initialFields = {
     email: '',
@@ -59,9 +62,14 @@ const SignIn = (): JSX.Element => {
             />
             {errors.password && <span className="error">{errors.password}</span>}
           </label>
-          <button data-test-id="auth-submit" className="button" type="submit">
+          {userStatus && userStatus !== DataStatus.PENDING ?
+            <button data-test-id="auth-submit" className="button" type="submit">
             Sign In
-          </button>
+            </button>
+            :
+            <Loader/> 
+          }
+         
         </form>
         <span>
           Don't have an account?

@@ -6,6 +6,7 @@ import { LOCAL_STORAGE_TOKEN } from '../../common/constants';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { allUserActions } from '../../store/users/users';
 import { DataStatus } from '../../common/enums';
+import { allTripsActions } from '../../store/trips/trips';
 
 
 const Header = (): JSX.Element => {
@@ -18,6 +19,11 @@ const Header = (): JSX.Element => {
     localStorage.removeItem(LOCAL_STORAGE_TOKEN);
     dispatch(allUserActions.setStatus(DataStatus.IDLE));
     dispatch(allUserActions.setTokenToNull(null));
+    dispatch(allTripsActions.resetAllFilters({
+      DIFFICULTY: null,
+      DURATION: null,
+      SEARCH:null
+    }));
     navigate('/sign-in');
   }
 

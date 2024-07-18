@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { DataStatus } from './enums';
 
 type Props = {
-    children: ReactElement,
+    children: ReactElement
 }
 
 const CheckedRoute = ({ children }: Props): JSX.Element => {
@@ -23,11 +23,12 @@ const CheckedRoute = ({ children }: Props): JSX.Element => {
 
   useEffect(() => {
     if (authStatus === DataStatus.SUCCESS) {
+      localStorage.setItem(LOCAL_STORAGE_TOKEN, localStorageToken as string);
       navigate('/');
     }
   }, [ authStatus, navigate ]);
   
-  return children;
+  return  children;
 };
 
 export default CheckedRoute;

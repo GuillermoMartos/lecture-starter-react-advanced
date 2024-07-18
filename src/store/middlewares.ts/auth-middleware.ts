@@ -4,11 +4,14 @@ import { allBookingsActions } from '../myBookings/bookings';
 import { allUserActions } from '../users/users';
 import { allTripsActions } from '../trips/trips';
 import { LOCAL_STORAGE_TOKEN } from '../../common/constants';
+import { Bounce, toast } from 'react-toastify';
 
 type ActionError = {
-    status: number;
     message: string;
+    name: string;
+    stack: string;
 }
+
 const authListenerMiddleware = createListenerMiddleware();
 
 authListenerMiddleware.startListening({
@@ -24,9 +27,19 @@ authListenerMiddleware.startListening({
   ),
   effect: async (action) => {
     const error = action.error as ActionError;
-    if (error && error.status === 401) {
+    if (error && error.message.includes('401')) {
+      toast.error('Unauthorized session. You have been logged out.', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+        transition: Bounce,
+      });
       localStorage.removeItem(LOCAL_STORAGE_TOKEN);
-      alert('final unath!');
     }
   },
 });

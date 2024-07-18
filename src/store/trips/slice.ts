@@ -36,6 +36,11 @@ const { reducer, actions } = createSlice(
       builder.addCase(tripsActions.changeFilters, (state, action) => {
         state.filterOptions= updateFilters(action.payload, state.filterOptions);
       });
+      
+      builder.addCase(tripsActions.resetAllFilters, (state, action) => {
+        state.filterOptions= action.payload;
+      });
+      
       builder.addCase(tripsActions.filterTrips, (state, action) => {
         state.filteredTrips= applyFilters(action.payload, state.allTrips );
       });
